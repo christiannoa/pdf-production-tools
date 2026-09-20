@@ -1,3 +1,5 @@
+import './App.css'
+
 // This file contains the main component of the application, which serves as the entry point for rendering the app's UI. It imports necessary dependencies and sets up the initial state and layout of the application. The component is responsible for managing global state, routing, and rendering child components based on the current route or user interactions.
 
 function App() {
@@ -23,7 +25,7 @@ function App() {
         <section className="tool-grid">
           
           {/* MERGE TOOLS */}
-          <article className="tool-icon">
+          <article className="tool-card">
             
             {/* We'll replce with this with a real icon later */}
             <div className="tool-icon">
@@ -39,7 +41,7 @@ function App() {
           {/* type="button: explicitly tells the broweser that this is a regular clickable button. */}
             <button type="button">
               Merge PDFs
-            </button>"
+            </button>
 
           </article>
 
