@@ -1,4 +1,5 @@
 import './App.css'
+import ToolCard from './components/ToolCard'
 
 // This file contains the main component of the application, which serves as the entry point for rendering the app's UI. It imports necessary dependencies and sets up the initial state and layout of the application. The component is responsible for managing global state, routing, and rendering child components based on the current route or user interactions.
 
@@ -25,42 +26,21 @@ function App() {
         <section className="tool-grid">
           
           {/* MERGE TOOLS */}
-          <article className="tool-card">
-            
-            {/* We'll replce with this with a real icon later */}
-            <div className="tool-icon">
-            </div>
-
-            <h2>Merge Front + Back PDFs</h2>
-
-            <p>
-              Combine sepereate front and back PDFs into one
-              correctly ordered production file.
-            </p>
-
-          {/* type="button: explicitly tells the broweser that this is a regular clickable button. */}
-            <button type="button">
-              Merge PDFs
-            </button>
-
-          </article>
-
+          
+          <ToolCard
+            icon="**"
+            title="Merge Front + back PDFs"
+            description="Combine seperate front and back PDFs into a single PDF file."
+            buttonText="Merge PDFs"
+            />
           {/* Split PDF Tool */}
-          <article className="tool-card">
 
-            <div className="tool-icon">
-            </div>  
-
-            <h2>Split PDF</h2>
-
-            <p>Split a single PDF into individual files.
-            </p>
-
-            <button type="button">
-              Split PDF
-            </button>
-
-          </article>
+          <ToolCard
+            icon="**"
+            title="Split PDF"
+            description="Split a single PDF into individual files."
+            buttonText="Split PDF"
+            />
 
         </section>
 
