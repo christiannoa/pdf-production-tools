@@ -3,6 +3,8 @@ type ToolCardProps = {
     title: string
     description: string
     buttonText: string
+    
+    onClick: () => void
 }
 
 
@@ -11,6 +13,7 @@ function ToolCard({
     title,
     description,
     buttonText,
+    onClick,
 }: ToolCardProps) {
 
     return (
@@ -22,7 +25,7 @@ function ToolCard({
             <h2>{title}</h2>
             <p>{description}</p>
 
-            <button type="button">
+            <button type="button" onClick={onClick}>
                 {buttonText}
             </button>
         </article>

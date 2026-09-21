@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css'
 import ToolCard from './components/ToolCard'
 
@@ -8,6 +9,31 @@ function App() {
   // THe code below is JSX
   // JSX looks like HTML but is actually JavaScript. It allows you to write HTML-like syntax directly in your JavaScript code, 
   // which React then transforms into actual DOM elements.
+
+  const [activeTool, setActiveTool] = useState<'home' | 'merge' | 'split'>('home')
+
+  if (activeTool === 'merge') {
+    return (
+      <div className="app">
+        <main className="app-content">
+
+          <button type="button" onClick={() => setActiveTool('home')}>
+            back
+          </button>
+
+          <header className="app-header">
+            <h1>Merge Front + Back PDFs</h1>
+
+            <p>
+              upload separate front and back PDF files.
+              We'll combine them into a single PDF file for you.
+            </p>
+          </header>
+        
+        </main>
+      </div>
+    )
+  }
 
   return (
 
@@ -32,6 +58,7 @@ function App() {
             title="Merge Front + back PDFs"
             description="Combine seperate front and back PDFs into a single PDF file."
             buttonText="Merge PDFs"
+            onClick={() => setActiveTool('merge')}
             />
           {/* Split PDF Tool */}
 
@@ -40,7 +67,9 @@ function App() {
             title="Split PDF"
             description="Split a single PDF into individual files."
             buttonText="Split PDF"
+            onClick={() => setActiveTool('split')}
             />
+
 
         </section>
 
