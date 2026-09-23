@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import ToolCard from './components/ToolCard'
+import FileUpload from './components/FileUpload'
 
 // This file contains the main component of the application, which serves as the entry point for rendering the app's UI. It imports necessary dependencies and sets up the initial state and layout of the application. The component is responsible for managing global state, routing, and rendering child components based on the current route or user interactions.
 
@@ -11,6 +12,9 @@ function App() {
   // which React then transforms into actual DOM elements.
 
   const [activeTool, setActiveTool] = useState<'home' | 'merge' | 'split'>('home')
+  const [frontFile, setFrontFile] = useState<File | null>(null)
+  const [backFile, setBackFile] = useState<File | null>(null)
+
 
   if (activeTool === 'merge') {
     return (
@@ -30,6 +34,27 @@ function App() {
             </p>
           </header>
         
+          <section className="upload-grid">
+
+            {/* Front PDF Upload */}
+          
+            <FileUpload
+              label="Front PDF"
+              description="Select the PDF containing the front pages."
+              file={frontFile}
+              onFileSelect={setFrontFile}
+            />
+
+            {/* Back PDF Upload */}
+
+            <FileUpload
+              label="Back PDF"
+              description="Select the PDF containing the back pages."
+              file={backFile}
+              onFileSelect={setBackFile}
+            />
+
+          </section>
         </main>
       </div>
     )
