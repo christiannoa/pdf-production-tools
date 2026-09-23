@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { PDFDocument } from 'pdf-lib'
+
 import './App.css'
 import ToolCard from './components/ToolCard'
 import FileUpload from './components/FileUpload'
@@ -15,6 +17,22 @@ function App() {
   const [frontFile, setFrontFile] = useState<File | null>(null)
   const [backFile, setBackFile] = useState<File | null>(null)
 
+async function handleMerge() {
+  
+  if (!frontFile || !backFile) {
+    alert('Please select both a frontpdf and a back PDF')
+    return
+  }
+
+    const frontPdfBytes = await frontFile.arrayBuffer()
+    const backPdfBytes = await backFile.arrayBuffer()
+
+    const frontPdf = await PDFDocument.load(frontPdfBytes)
+    const backPdf = await PDFDocument.load(backPdfBytes)
+
+    console.log('Front pages:', frontPdf.getPageCount())
+    console.log('Back pages:', backPdf.getPageCount())
+}
 
   if (activeTool === 'merge') {
     return (
@@ -53,6 +71,13 @@ function App() {
               file={backFile}
               onFileSelect={setBackFile}
             />
+
+            <button
+              type="button"
+              onClick={handleMerge}
+            >
+              Merge PDFs
+            </button>
 
           </section>
         </main>
