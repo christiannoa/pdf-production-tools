@@ -19,20 +19,87 @@ function App() {
 
 async function handleMerge() {
   
+  // Makes sure both PDFs have been selected.
   if (!frontFile || !backFile) {
-    alert('Please select both a frontpdf and a back PDF')
+    alert('Please select both a front pdf and a back PDF.')
     return
   }
-
+    // coverts the selected browser files into raw binary data.
     const frontPdfBytes = await frontFile.arrayBuffer()
     const backPdfBytes = await backFile.arrayBuffer()
 
+    // Loads both PDFs into pdf-lib
     const frontPdf = await PDFDocument.load(frontPdfBytes)
     const backPdf = await PDFDocument.load(backPdfBytes)
 
-    console.log('Front pages:', frontPdf.getPageCount())
-    console.log('Back pages:', backPdf.getPageCount())
-}
+    // creates one new empty pdf
+    const mergedPdf = await PDFDocument.create()
+
+    // Get the page indexes from both PDFs
+    const frontPageIndices = frontPdf.getPageIndices()
+    const backPageIndices = backPdf.getPageIndices()
+
+    // Copy all front pages into new PDF document
+    const frontPages = await mergedPdf.copyPages(
+      frontPdf,
+      frontPageIndices
+    )
+
+    // Copy all back pages into new PDF documents as well
+    const backPages = await mergedPdf.copyPages (
+      backPdf,
+      backPageIndices
+    )
+
+    // Determines which PDF has more pages
+    const totalPages = Math.max (
+      frontPages.length,
+      backPages.length
+    )
+
+    //-------------
+    // Builds THE PDF
+    //-------------
+
+    // Go through every front/back pair
+    for (let i = 0; i < totalPages; i++) {
+      
+      // adds front page first
+      if (i < frontPages.length) {
+        mergedPdf.addPage(frontPages[i])
+      }
+
+      // adds corresponding back page second
+      if (i < backPages.length) {
+        mergedPdf.addPage(backPages[i])
+      }
+    }
+      // Saves one more time
+      const mergedPdfBytes = await mergedPdf.save()
+
+      // Turn the finished PDF data into a browser blob
+      const mergedBlob = new Blob(
+        [mergedPdfBytes],
+        { type: 'application/pdf' }
+      )
+
+      // creates temporary URL pointing to our PDF
+      const downloadUrl = URL.createObjectURL(mergedBlob)
+
+      // Creates a temporary download link
+      const downloadLink = document.createElement('a')
+
+      downloadLink.href = downloadUrl
+
+      downloadLink.download = 'merged_output.pdf'
+
+      // download one finished PDF
+      downloadLink.click()
+
+      // Remove the temp URL from memory
+      URL.revokeObjectURL(downloadUrl)
+
+    }
 
   if (activeTool === 'merge') {
     return (
