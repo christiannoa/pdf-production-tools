@@ -16,6 +16,7 @@ function App() {
   const [activeTool, setActiveTool] = useState<'home' | 'merge' | 'split'>('home')
   const [frontFile, setFrontFile] = useState<File | null>(null)
   const [backFile, setBackFile] = useState<File | null>(null)
+  const [splitFile, setSplitFile] = useState<File | null>(null)
 
 async function handleMerge() {
   
@@ -73,13 +74,18 @@ async function handleMerge() {
       if (i < backPages.length) {
         mergedPdf.addPage(backPages[i])
       }
-    }
-      // Saves one more time
+    } //Loops ends here
+
+
+      // Save run ones time, only reaches here after the loops has
+      // finished add all front + back pages.
       const mergedPdfBytes = await mergedPdf.save()
+
+      const mergedPdfData = new Uint8Array(mergedPdfBytes)
 
       // Turn the finished PDF data into a browser blob
       const mergedBlob = new Blob(
-        [mergedPdfBytes],
+        [mergedPdfData],
         { type: 'application/pdf' }
       )
 
@@ -100,6 +106,56 @@ async function handleMerge() {
       URL.revokeObjectURL(downloadUrl)
 
     }
+
+
+  async function handleSplit() {
+
+      if(!splitFile) {
+        alert('Please select a PDF to split.')
+        return
+      }
+
+      const splitPdfBytes = await splitFile.arrayBuffer()
+
+      const sourcePdf = await PDFDocument.load(splitPdfBytes)
+
+      const pageCount = sourcePdf.getPageCount()
+
+      for (let i = 0; i < pageCount; i++) {
+
+        const newPdf = await PDFDocument.create()
+
+        const [copiedPage] = await newPdf.copyPages(
+          sourcePdf,
+          [i]
+        )
+
+        newPdf.addPage(copiedPage)
+
+        const newPdfBytes = await newPdf.save()
+
+        const newPdfData = new Uint8Array(newPdfBytes)
+
+        const pdfBlob = new Blob(
+          [newPdfData],
+          { type: 'application/pdf' }
+        )
+
+        const downloadUrl = URL.createObjectURL(pdfBlob)
+
+        const downloadLink = document.createElement('a')
+
+        downloadLink.href = downloadUrl
+
+        downloadLink.download = `page-${i + 1}.pdf`
+
+        downloadLink.click()
+
+        URL.revokeObjectURL(downloadUrl)
+
+      }
+
+  }
 
   if (activeTool === 'merge') {
     return (
@@ -147,6 +203,48 @@ async function handleMerge() {
             </button>
 
           </section>
+        </main>
+      </div>
+    )
+  }
+
+  if(activeTool === 'split') {
+    return (
+      <div className="app">
+
+        <main className="app-content">
+          
+          <button
+            type="button"
+            onClick={() => setActiveTool('home')}
+            >
+            </button>
+
+            <header className="app-header">
+
+                <h1>Split PDF</h1>
+
+                <p>
+                  upload. a multi-page PDF and 
+                  split each page into it's own individual PDF file.
+                </p>
+            </header>
+
+            <section className="upload-grid">
+              <FileUpload
+                label="PDF File"
+                description="select the PDF you want to split."
+                file={splitFile}
+                onFileSelect={setSplitFile}
+              />
+            </section>
+
+            <button
+              type="button"
+              onClick={handleSplit}
+              >
+                Split PDF
+              </button>
         </main>
       </div>
     )
