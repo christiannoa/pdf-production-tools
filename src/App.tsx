@@ -218,6 +218,7 @@ async function handleMerge() {
             type="button"
             onClick={() => setActiveTool('home')}
             >
+              back
             </button>
 
             <header className="app-header">
@@ -225,7 +226,7 @@ async function handleMerge() {
                 <h1>Split PDF</h1>
 
                 <p>
-                  upload. a multi-page PDF and 
+                  Upload a multi-page PDF and 
                   split each page into it's own individual PDF file.
                 </p>
             </header>

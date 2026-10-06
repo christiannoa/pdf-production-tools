@@ -157,3 +157,96 @@ Responsive Design
     grid-template-columns: 1fr;
   }
 }
+
+
+/*
+File upload
+*/
+
+.upload-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.upload-card-header h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.upload-card-header p {
+  margin: 0;
+  color: #777;
+}
+
+/* Custom file upload area */
+.file-dropzone {
+  min-height: 180px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 32px;
+
+  border: 2px dashed #d8d8d8;
+  border-radius: 16px;
+
+  background: #fafafa;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+
+.file-dropzone:hover {
+  border-color: #999;
+  background: f6f6f6;
+}
+
+.upload-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 8px;
+
+  border-radius: 12px;
+
+  background: f0f0ff;
+
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.upload-title {
+  font-weight: 600;
+}
+.file-name {
+  max-width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-weight: 600;
+}
+
+.file-action {
+  color: #777;
+  font-size: 14px;
+}
+
+.file-input {
+  display: none;
+}
+
+
+}

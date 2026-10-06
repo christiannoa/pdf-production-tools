@@ -16,13 +16,43 @@ function FileUpload({
     return (
         <div className="upload-card">
 
-            <h2>{label}</h2>
 
+        <div className="upload-card-header">
+            <h2>{label}</h2>
             <p>{description}</p>
+        </div>
+
+        <label className="file-dropzone">
+            <div className="upload-icon">
+            </div>
+
+            {file ? (
+            <>
+                <span className="file-name">
+                    {file.name}
+                </span>
+
+                <span className="file-action">
+                    Click to replace file
+                </span>
+            </>
+            ) : (
+            <>
+                <span className="upload-title">
+                    Choose PDF
+                </span>
+
+                <span className="file-action">
+                    click to select a file
+                </span>
+            </>
+
+            )}
 
             <input
-                type="file"
+                className="file-input"
 
+                type="file"
                 accept="application/pdf"
 
                 onChange={(event) => {
@@ -34,12 +64,7 @@ function FileUpload({
                 }}
             />
 
-        {file && (
-            <p className="selected-file">
-                selected: {file.name}
-            </p>
-        )} 
-
+        </label>
         </div>
     )
 }
