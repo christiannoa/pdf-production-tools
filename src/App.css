@@ -248,5 +248,10 @@ File upload
   display: none;
 }
 
+button:disabled {
+  opacity: 0.4;
+  cursor: now-allowed;
+  transform: none;
+}
 
 }

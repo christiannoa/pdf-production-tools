@@ -198,6 +198,7 @@ async function handleMerge() {
             <button
               type="button"
               onClick={handleMerge}
+              disabled={!frontFile || !backFile}
             >
               Merge PDFs
             </button>
@@ -243,6 +244,7 @@ async function handleMerge() {
             <button
               type="button"
               onClick={handleSplit}
+              disabled={!splitFile}
               >
                 Split PDF
               </button>
